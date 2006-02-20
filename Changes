@@ -1,0 +1,6 @@
+Revision history for GBPVR-CDBI
+
+0.01    2006-02-20
+        Initial release from 2005-04-27 at http://forums.gbpvr.com/showthread.php?p=35938#poststop
+        Added RecTracker base class and subclass for RecordedShows table.
+
