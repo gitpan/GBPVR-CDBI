@@ -1,31 +1,31 @@
-package GBPVR::CDBI::VA;
+package GBPVR::CDBI::RecTracker;
 
 use warnings;
 use strict;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 use base 'GBPVR::CDBI';
-our $dsn = GBPVR::CDBI::mdb2dsn('C:\program files\devnz\gbpvr\video archive.mdb');
-GBPVR::CDBI::VA->set_db('Main', "dbi:ODBC:$dsn", '', '', $GBPVR::CDBI::dbopts );
+
+__PACKAGE__->db_setup(file => 'rectracker.mdb');
+
 1;
+
 __END__
 
 =head1 NAME
 
-GBPVR::CDBI::VA - GBPVR Video Archive plug-in access
+GBPVR::CDBI::RecTracker - GBPVR RecTracker utility access
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =head1 SYNOPSIS
 
 =head1 AUTHOR
 
 David Westbrook, C<< <dwestbrook at gmail.com> >>
-
-=head1 ACKNOWLEDGEMENTS
 
 =head1 COPYRIGHT & LICENSE
 

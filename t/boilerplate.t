@@ -46,12 +46,12 @@ sub module_boilerplate_ok {
 }
 
 module_boilerplate_ok('lib/GBPVR/CDBI.pm');
-module_boilerplate_ok('lib/GBPVR/CDBI/VA.pm');
-module_boilerplate_ok('lib/GBPVR/CDBI/VA/ArchiveTable.pm');
+module_boilerplate_ok('lib/GBPVR/CDBI/VideoArchive.pm');
+module_boilerplate_ok('lib/GBPVR/CDBI/VideoArchive/ArchiveTable.pm');
 module_boilerplate_ok('lib/GBPVR/CDBI/Channel.pm');
 module_boilerplate_ok('lib/GBPVR/CDBI/CaptureSource.pm');
 module_boilerplate_ok('lib/GBPVR/CDBI/Programme.pm');
 module_boilerplate_ok('lib/GBPVR/CDBI/PlaybackPosition.pm');
 module_boilerplate_ok('lib/GBPVR/CDBI/RecordingSchedule.pm');
-module_boilerplate_ok('lib/GBPVR/CDBI/RT.pm');
-module_boilerplate_ok('lib/GBPVR/CDBI/RT/RecordedShows.pm');
+module_boilerplate_ok('lib/GBPVR/CDBI/RecTracker.pm');
+module_boilerplate_ok('lib/GBPVR/CDBI/RecTracker/RecordedShows.pm');

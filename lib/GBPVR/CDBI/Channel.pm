@@ -3,12 +3,18 @@ package GBPVR::CDBI::Channel;
 use warnings;
 use strict;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 use base 'GBPVR::CDBI';
-GBPVR::CDBI::Channel->table('channel');
-GBPVR::CDBI::Channel->columns(Primary => qw/oid/ );
-GBPVR::CDBI::Channel->columns(All => qw/ oid name channelID channel_number favourite / );
+
+__PACKAGE__->table('channel');
+__PACKAGE__->columns(Primary => qw/oid/ );
+__PACKAGE__->columns(All => qw/ oid name channelID channel_number favourite / );
+
+sub favorite {
+  my $self = shift;
+  return $self->favourite( @_ );
+}
 
 1;
 __END__
@@ -19,13 +25,19 @@ GBPVR::CDBI::Channel - GBPVR.channel table
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =head1 SYNOPSIS
 
 =head1 ATTRIBUTES
 
 oid, name, channelID, channel_number, favourite
+
+=head1 METHODS
+
+=head2 favorite
+
+Alias for favourite
 
 =head1 AUTHOR
 

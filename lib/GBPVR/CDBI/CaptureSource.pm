@@ -3,13 +3,16 @@ package GBPVR::CDBI::CaptureSource;
 use warnings;
 use strict;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 use base 'GBPVR::CDBI';
-GBPVR::CDBI::CaptureSource->table('capture_source');
-GBPVR::CDBI::CaptureSource->columns(Primary => qw/oid/ );
-GBPVR::CDBI::CaptureSource->columns(All => qw/ oid name recording_source_class epgsource_class channel_changer_class / );
+
+__PACKAGE__->table('capture_source');
+__PACKAGE__->columns(Primary => qw/oid/ );
+__PACKAGE__->columns(All => qw/ oid name recording_source_class epgsource_class channel_changer_class / );
+
 1;
+
 __END__
 
 =head1 NAME
@@ -18,7 +21,7 @@ GBPVR::CDBI::CaptureSource - GBPVR.capture_source table
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =head1 SYNOPSIS
 

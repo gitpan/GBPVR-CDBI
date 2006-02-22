@@ -1,27 +1,33 @@
-package GBPVR::CDBI::RT::RecordedShows;
+package GBPVR::CDBI::RecTracker::RecordedShows;
 
 use warnings;
 use strict;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
-use base 'GBPVR::CDBI::RT';
-GBPVR::CDBI::RT::RecordedShows->table('RecordedShows');
-GBPVR::CDBI::RT::RecordedShows->columns(Primary => qw/oid/ );
-GBPVR::CDBI::RT::RecordedShows->columns(All => qw/
+use base 'GBPVR::CDBI::RecTracker';
+
+__PACKAGE__->table('RecordedShows');
+__PACKAGE__->columns(Primary => qw/oid/ );
+__PACKAGE__->columns(All => qw/
 		name sub_title description unqiue_id startdate
 	/ );
-sub unique_id { my $obj=shift; return $obj->unqiue_id( @_ ); }
+
+sub unique_id {
+  my $self = shift;
+  return $self->unqiue_id( @_ );
+}
+
 1;
 __END__
 
 =head1 NAME
 
-GBPVR::CDBI::RT::RecordedShows - RecTracker.RecordedShows table
+GBPVR::CDBI::RecTracker::RecordedShows - RecTracker.RecordedShows table
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =head1 SYNOPSIS
 

@@ -3,13 +3,16 @@ package GBPVR::CDBI::PlaybackPosition;
 use warnings;
 use strict;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 use base 'GBPVR::CDBI';
-GBPVR::CDBI::PlaybackPosition->table('playback_position');
-GBPVR::CDBI::PlaybackPosition->columns(Primary => qw/oid/ );
-GBPVR::CDBI::PlaybackPosition->columns(All => qw/ oid filename last_position / );
+
+__PACKAGE__->table('playback_position');
+__PACKAGE__->columns(Primary => qw/oid/ );
+__PACKAGE__->columns(All => qw/ oid filename last_position / );
+
 1;
+
 __END__
 
 =head1 NAME
@@ -18,7 +21,7 @@ GBPVR::CDBI::PlaybackPosition - GBPVR.playback_position table
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =head1 SYNOPSIS
 

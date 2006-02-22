@@ -3,12 +3,15 @@ package GBPVR::CDBI::RecordingSchedule;
 use warnings;
 use strict;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 use base 'GBPVR::CDBI';
-GBPVR::CDBI::RecordingSchedule->table('recording_schedule');
-GBPVR::CDBI::RecordingSchedule->columns(Primary => qw/oid/ );
-GBPVR::CDBI::RecordingSchedule->columns(All => qw/
+use GBPVR::CDBI::PlaybackPosition;
+use GBPVR::CDBI::VideoArchive::ArchiveTable;
+
+__PACKAGE__->table('recording_schedule');
+__PACKAGE__->columns(Primary => qw/oid/ );
+__PACKAGE__->columns(All => qw/
 	oid
 	programme_oid
 	capture_source_oid
@@ -24,10 +27,42 @@ GBPVR::CDBI::RecordingSchedule->columns(All => qw/
 	post_pad_minutes
 /, 
 );
-GBPVR::CDBI::RecordingSchedule->has_a( programme_oid => 'GBPVR::CDBI::Programme');
-GBPVR::CDBI::RecordingSchedule->has_a( capture_source_oid => 'GBPVR::CDBI::CaptureSource');
-GBPVR::CDBI::RecordingSchedule->has_a( manual_channel_oid => 'GBPVR::CDBI::Channel');
-GBPVR::CDBI::RecordingSchedule->columns(Stringify => qw/ programme_oid / );
+
+sub parse_manual_time {
+  my $self = shift;
+  my $time = shift;
+  return unless $time =~ /^(\d+)-(\d+)-(\d+) (\d+):(\d+):(\d+)$/;
+  return ($1, $2, $3, $4, $5, $6);  # (Y,M,D, H,M,S)
+}
+
+sub start_time {
+  my $self = shift;
+  my $time = $self->manual_start_time or return;
+  return sprintf( "%02d:%02d", ($self->parse_manual_time($time))[3,4] );
+}
+
+sub end_time {
+  my $self = shift;
+  my $time = $self->manual_end_time or return;
+  return sprintf( "%02d:%02d", ($self->parse_manual_time($time))[3,4] );
+}
+
+sub start_date {
+  my $self = shift;
+  my $time = $self->manual_start_time or return;
+  return sprintf( "%04d-%02d-%02d", ($self->parse_manual_time($time))[0,1,2] );
+}
+
+sub end_date {
+  my $self = shift;
+  my $time = $self->manual_end_time or return;
+  return sprintf( "%04d-%02d-%02d", ($self->parse_manual_time($time))[0,1,2] );
+}
+
+__PACKAGE__->has_a( programme_oid => 'GBPVR::CDBI::Programme');
+__PACKAGE__->has_a( capture_source_oid => 'GBPVR::CDBI::CaptureSource');
+__PACKAGE__->has_a( manual_channel_oid => 'GBPVR::CDBI::Channel');
+__PACKAGE__->columns(Stringify => qw/ programme_oid / );
 
 sub last_position {
   my $obj = shift;
@@ -38,11 +73,13 @@ sub last_position {
   }
   return $pp->last_position;
 }
+
 sub archivetable {
   my $obj = shift;
-  my ($at) = GBPVR::CDBI::VA::ArchiveTable->search( UniqueID => $obj->programme_oid->unique_identifier );
+  my ($at) = GBPVR::CDBI::VideoArchive::ArchiveTable->search( UniqueID => $obj->programme_oid->unique_identifier );
   return $at;
 }
+
 sub status_string {
   my $obj = shift;
   my %mapping = (
@@ -51,6 +88,9 @@ sub status_string {
   );
   return $mapping{ $obj->status };
 }
+
+
+
 1;
 __END__
 
@@ -60,13 +100,31 @@ GBPVR::CDBI::RecordingSchedule - GBPVR.recording_schedule table
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =head1 SYNOPSIS
 
 =head1 ATTRIBUTES
 
 oid, programme_oid, capture_source_oid, filename, status, recording_type, recording_group, manual_start_time, manual_end_time, manual_channel_oid, quality_level, pre_pad_minutes, post_pad_minutes
+
+manual_start_time and manual_end_time are 'YYYY-MM-DD HH:MM:SS' strings.
+
+=head2 start_time
+
+Read-only.  Returns manual_start_time as a 'HH:MM' string.
+
+=head2 end_time
+
+Read-only.  Returns manual_end_time as a 'HH:MM' string.
+
+=head2 start_date
+
+Read-only.  Returns manual_start_time as a 'YYYY-MM-DD' string.
+
+=head2 end_date
+
+Read-only.  Returns manual_end_time as a 'YYYY-MM-DD' string.
 
 =head1 FOREIGN KEYS
 
@@ -87,6 +145,10 @@ Attempts to return the corresponding (via unique_identifier) GBPVR::CDBI::VA::Ar
 =head2 status_string
 
 Maps $obj->status to a human-readable string.
+
+=head2 parse_manual_time
+
+Takes a 'YYYY-MM-DD HH:MM:SS' string and returns a (YYYY,MM,DD,HH,MM,SS) array.
 
 =head1 AUTHOR
 

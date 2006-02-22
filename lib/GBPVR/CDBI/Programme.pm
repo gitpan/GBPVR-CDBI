@@ -3,12 +3,13 @@ package GBPVR::CDBI::Programme;
 use warnings;
 use strict;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 use base 'GBPVR::CDBI';
-GBPVR::CDBI::Programme->table('programme');
-GBPVR::CDBI::Programme->columns(Primary => qw/oid/ );
-GBPVR::CDBI::Programme->columns(All => qw/
+
+__PACKAGE__->table('programme');
+__PACKAGE__->columns(Primary => qw/oid/ );
+__PACKAGE__->columns(All => qw/
 	oid
 	name
 	sub_title
@@ -18,8 +19,10 @@ GBPVR::CDBI::Programme->columns(All => qw/
 	channel_oid
 	unique_identifier
 / );
-GBPVR::CDBI::Programme->has_a( channel_oid => 'GBPVR::CDBI::Channel');
+__PACKAGE__->has_a( channel_oid => 'GBPVR::CDBI::Channel');
+
 1;
+
 __END__
 
 =head1 NAME
@@ -28,7 +31,7 @@ GBPVR::CDBI::Programme - GBPVR.programme table
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =head1 SYNOPSIS
 
