@@ -9,7 +9,11 @@ WriteMakefile(
     ABSTRACT_FROM       => 'lib/GBPVR/CDBI.pm',
     PL_FILES            => {},
     PREREQ_PM => {
-        'Test::More' => 0,
+        'Test::More' => 0.44,
+        'Class::DBI' => 0,
+        'DBD::ODBC'  => 0,
+        'Win32::TieRegistry' => 0,
+        'File::Spec' => 0,
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'GBPVR-CDBI-*' },

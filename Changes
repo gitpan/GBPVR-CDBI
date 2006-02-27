@@ -1,5 +1,13 @@
 Revision history for GBPVR-CDBI
 
+0.03    2006-02-26
+  + Added all prereq's to the PREREQ_PM entry in Makefile.PL
+  + Made explicit "Windows only" notes in docs
+  + Added test db and test script for RecTracker
+  + Added test db and test script for VideoArchive
+  + Added test db and test script for RecordingSchedule (and fk's)
+  + bugfixes in RecordingSchedule in last_position(), archivetable(), status_string()
+
 0.02    2006-02-22
    + Get gbpvr dir dynamically from 'HKEY_LOCAL_MACHINE\software\devnz\GBPVR InstallDir' via Win32::TieRegistry (new dependency). Use it to create path for gbpvr.mdb, video archive.mdb, and rectracker.mdb files.
    + Added alias favorite() for GBPVR::CDBI::Channel->favourite()

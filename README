@@ -2,6 +2,8 @@ GBPVR-CDBI
 
 This set of classes provides an easy to use, robust, and well-documented way to access the GBPVR database via the Class::DBI module.  The major tables are included as well as that of the Video Archive plugin.
 
+THIS IS A WINDOWS-ONLY MODULE since GBPVR is a windows-only application.
+
 What is GBPVR? It is a Personal Video Recorder (PVR) program. The Microsoft Access .mdb database that is creates stores information such as recording schedules and details about completed recordings. GBPVR can be obtained here:
   http://gbpvr.com
 
@@ -12,6 +14,10 @@ PREREQUISITES
     DBD::ODBC
 
     Class::DBI
+
+    Win32::TieRegistry
+
+    File::Spec
 
 You can install these from a dos prompt with:
 

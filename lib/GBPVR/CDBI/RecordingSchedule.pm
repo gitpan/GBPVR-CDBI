@@ -3,7 +3,7 @@ package GBPVR::CDBI::RecordingSchedule;
 use warnings;
 use strict;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use base 'GBPVR::CDBI';
 use GBPVR::CDBI::PlaybackPosition;
@@ -66,16 +66,22 @@ __PACKAGE__->columns(Stringify => qw/ programme_oid / );
 
 sub last_position {
   my $obj = shift;
-  my ($pp) = GBPVR::CDBI::PlaybackPosition->find_or_create( { filename => $obj->filename } );
+  my ($pp) = GBPVR::CDBI::PlaybackPosition->search( filename => $obj->filename );
   if( @_ ){
-    $pp->last_position( shift );
-    $pp->update;
+    my $pos = shift;
+    if( $pp ){
+      $pp->last_position( $pos);
+      $pp->update;
+    }else{
+      $pp = GBPVR::CDBI::PlaybackPosition->create({ filename => $obj->filename, last_position => $pos });
+    }
   }
-  return $pp->last_position;
+  return $pp ? $pp->last_position : undef;
 }
 
 sub archivetable {
   my $obj = shift;
+  return unless $obj->programme_oid;
   my ($at) = GBPVR::CDBI::VideoArchive::ArchiveTable->search( UniqueID => $obj->programme_oid->unique_identifier );
   return $at;
 }
@@ -84,7 +90,9 @@ sub status_string {
   my $obj = shift;
   my %mapping = (
 	0	=> 'Pending',
-	2	=> 'Compeleted',
+	2	=> 'Completed',
+	3	=> 'Number3',
+	4	=> 'Number4',
   );
   return $mapping{ $obj->status };
 }

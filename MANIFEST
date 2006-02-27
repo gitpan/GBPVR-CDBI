@@ -26,3 +26,9 @@ t/00-load.t
 t/boilerplate.t
 t/pod-coverage.t
 t/pod.t
+t/rectracker.t
+t/rectracker.mdb
+t/videoarchive.t
+t/videoarchive.mdb
+t/recordingschedule.t
+t/gbpvr.mdb

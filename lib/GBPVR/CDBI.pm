@@ -3,7 +3,7 @@ package GBPVR::CDBI;
 use warnings;
 use strict;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use base 'Class::DBI';
 use Win32::TieRegistry;
@@ -34,7 +34,7 @@ GBPVR::CDBI - Database Abstraction for GBPVR
 
 =head1 VERSION
 
-Version 0.02
+Version 0.03
 
 =head1 SYNOPSIS
 
@@ -83,6 +83,8 @@ Example to force all scheduled 'Simpsons' recordings to be low quality:
 =head1 INTRODUCTION
 
 This set of classes provides an easy to use, robust, and well-documented way to access the GBPVR database via the Class::DBI module.  The major tables are included as well as that of the Video Archive plugin.
+
+B<This is a windows-only module> since GBPVR is a windows-only application.
 
 What is GBPVR? It is a Personal Video Recorder (PVR) program. The Microsoft Access .mdb database that is creates stores information such as recording schedules and details about completed recordings. GBPVR can be obtained here:
   http://gbpvr.com
