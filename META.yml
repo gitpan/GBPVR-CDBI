@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                GBPVR-CDBI
-version:             0.03
+version:             0.04
 abstract:            Database Abstraction for GBPVR
 license:             unknown
 generated_by:        ExtUtils::MakeMaker version 6.30_01

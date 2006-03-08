@@ -3,7 +3,7 @@ package GBPVR::CDBI;
 use warnings;
 use strict;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 use base 'Class::DBI';
 use Win32::TieRegistry;
@@ -20,7 +20,12 @@ sub db_setup {
   $file = File::Spec->rel2abs($file, $gbpvr_dir);  # if file was a relative path, make it full with respect to GBPVR
   my $dbopts = $p->{dbopts} || { AutoCommit=>0, LongTruncOk => 1, LongReadLen => 255 };
   my $dsn = 'driver=Microsoft Access Driver (*.mdb);dbq=' . $file;
-  return $self->set_db('Main', "dbi:ODBC:$dsn", '', '', $dbopts );
+  my $rc;
+  # trap errors, specifically for the case that GBPVR isn't installed so the
+  # default mdb's don't exist (e.g. for cpan-testers)
+  eval { $rc = $self->set_db('Main', "dbi:ODBC:$dsn", '', '', $dbopts ); };
+  warn "ERROR in db_setup('$file'): $@" if $@;
+  return $rc;
 }
 
 1;
@@ -34,7 +39,7 @@ GBPVR::CDBI - Database Abstraction for GBPVR
 
 =head1 VERSION
 
-Version 0.03
+Version 0.04
 
 =head1 SYNOPSIS
 

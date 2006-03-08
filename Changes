@@ -1,5 +1,8 @@
 Revision history for GBPVR-CDBI
 
+0.04    2006-03-08
+  + A test from Corion ( http://www.nntp.perl.org/group/perl.cpan.testers/294709 ) showed that it (of course) bombs if the actual gbpvr mdb's don't exist ... trapped this error so that test should run cleanly now ..
+
 0.03    2006-02-26
   + Added all prereq's to the PREREQ_PM entry in Makefile.PL
   + Made explicit "Windows only" notes in docs
